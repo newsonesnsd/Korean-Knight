@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 // using UnityEngine.UI.Image;
 
@@ -26,10 +24,12 @@ public class ShopController : MonoBehaviour
     public Text charName;
     public Text userCoin;
     // Set Character
-    Character ch1 = new Character(1, "CHAR1", 112);
-    Character ch2 = new Character(2, "CHAR2", 150);
-    Character ch3 = new Character(3, "CHAR3", 100);
-    Character ch4 = new Character(4, "CHAR4", 50);
+    Character ch1 = new Character();
+    string ch1id = "CH0001";
+    
+    Character ch2 = new Character("2", "CHAR2", 150);
+    Character ch3 = new Character("3", "CHAR3", 100);
+    Character ch4 = new Character("4", "CHAR4", 50);
     User user = new User();
 
     // Start is called before the first frame update

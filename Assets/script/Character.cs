@@ -10,14 +10,15 @@ using Firebase.Unity.Editor;
 
 public class Character : MonoBehaviour
 {
-    private string[] cId = new string[6];
-    private string[] cName = new string[6];
-    private int[] cPrice = new int[6];
-    private int characterId;
-    private string characterName;
-    private int price;
+    public string characterId;
+    public string characterName;
+    public int price;
 
-    public Character(int id, string name, int rate) {
+    public Character(){
+
+    }
+
+    public Character(string id, string name, int rate) {
         characterId = id;
         characterName = name;
         price = rate;
@@ -34,43 +35,8 @@ public class Character : MonoBehaviour
         
     }
 
-    // public void setId(string charId){
-    //     id = charId;
-    // }
-    
-    public string getId(int index){
-        return cId[index];
-    }
-
-    // public void setName(string charName){
-    //     name = charName;
-    // }
-
-    public string getName(int index){
-        return cName[index];
-    }
-
-    // public void setPrice(int charPrice){
-    //     this.charPrice = charPrice;
-    // }
-
-    public int getPrice(int index){
-        return cPrice[index];
-    }
-
-    // private void getData(){
-    //     RestClient.GetArray<Character>("https://testfirebase-b970e.firebaseio.com/Character.json").Then(response =>
-    //     {
-    //         for (int i = 0; i < response.Length; i++){
-    //             cId[i] = response[i].characterId;
-    //             cName[i] = response[i].characterName;
-    //             cPrice[i] = response[i].price;
-    //         }
-    //     });
-    // }
-
     // Test Only อย่าแตะ
-    public int getCID(){
+    public string getCID(){
         return characterId;
     }
 
@@ -80,6 +46,18 @@ public class Character : MonoBehaviour
 
     public int getcPrice(){
         return price;
+    }
+
+    public void setCharacter(String charID){
+        RestClient.Get<Character>("https://testfirebase-b970e.firebaseio.com/Character/" + charID +".json").Then(response =>
+            {
+                characterId = response.characterId;
+                characterName = response.characterName;
+                price = response.price;
+                // return newChar;
+            });
+        
+          
     }
 
 }
