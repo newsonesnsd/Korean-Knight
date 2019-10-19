@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 7d24973474e29eb4cb2bb60a5b29fd5a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: TH Sarabun New
+  fontNames:
+  - TH Sarabun New
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 76a5abbeef8c18348815cd0fd61130a3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

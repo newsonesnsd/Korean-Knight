@@ -1,0 +1,12 @@
+{
+    "items" :[{
+        "key":"game_title",
+        "value" :"เกมตอบคำถาม"
+    },
+    {
+        "key" :"start_button",
+        "value" : "เริ่มเกม"
+    }
+
+]
+}
