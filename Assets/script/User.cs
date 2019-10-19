@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Reflection.Emit;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,8 @@ using UnityEngine.SceneManagement;
 
 public class User : MonoBehaviour
 {
-    public static String usermail;
-    public static String userID;
+    public static String usermail = "newsonesnsd@gmail.com";
+    public static String userID = "x8aqrJS3gEMSYrqSIWgSjl5D2qT2";
     public String email;
     public String uid;
     public Double score;
