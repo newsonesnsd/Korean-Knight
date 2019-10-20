@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
+using Proyecto26;
 // using UnityEngine.UI.Image;
 
 public class ShopController : MonoBehaviour
@@ -23,35 +25,45 @@ public class ShopController : MonoBehaviour
     public Button buyButton;
     public Text charName;
     public Text userCoin;
+
+    private string[] json = new string[4]; 
     // Set Character
+    // Character ch1 = new Character("1", "CHAR1", 200);
     Character ch1 = new Character();
-    string ch1id = "CH0001";
-    
-    Character ch2 = new Character("2", "CHAR2", 150);
-    Character ch3 = new Character("3", "CHAR3", 100);
-    Character ch4 = new Character("4", "CHAR4", 50);
+    Character ch2 = new Character();
+    Character ch3 = new Character();
+    Character ch4 = new Character();
     User user = new User();
 
     // Start is called before the first frame update
     void Start()
     {
         user.setUser(User.usermail);
-        Debug.Log(user.showData());
-        char1Price.text = ch1.getcPrice() + "";
-        char2Price.text = ch2.getcPrice() + "";
-        char3Price.text = ch3.getcPrice() + "";
-        char4Price.text = ch4.getcPrice() + "";
+        getCharacter();
+        // Debug.Log(json[1]);
+        // Set Character Property
+        // JsonUtility.FromJsonOverwrite(json[0], ch1);
+        // JsonUtility.FromJsonOverwrite(json[1], ch2);
+        // JsonUtility.FromJsonOverwrite(json[2], ch3);
+        // JsonUtility.FromJsonOverwrite(json[3], ch4);
+
+        // Debug.Log(user.showData());
+        // Debug.Log(ch1.ToString());
+        char1Price.text = ch1.getPrice() + "";
+        char2Price.text = ch2.getPrice() + "";
+        char3Price.text = ch3.getPrice() + "";
+        char4Price.text = ch4.getPrice() + "";
         userCoin.text = user.getCoin() + "";
         // Default Character
-        updateName(ch4.getcName());
+        updateName(ch1.getName());
         hidePicture(1);
         hidePicture(2);
         hidePicture(3);
         // Listener Onclick Character
-        char1.onClick.AddListener(() => updateName(ch1.getcName()));
-        char2.onClick.AddListener(() => updateName(ch2.getcName()));
-        char3.onClick.AddListener(() => updateName(ch3.getcName()));
-        char4.onClick.AddListener(() => updateName(ch4.getcName()));
+        char1.onClick.AddListener(() => updateName(ch1.getName()));
+        char2.onClick.AddListener(() => updateName(ch2.getName()));
+        char3.onClick.AddListener(() => updateName(ch3.getName()));
+        char4.onClick.AddListener(() => updateName(ch4.getName()));
         buyButton.onClick.AddListener(() => buyCharAction(charName.GetComponent<Text>().text));
     }
 
@@ -70,7 +82,7 @@ public class ShopController : MonoBehaviour
     {
         if (charIndex == 1)
         {
-            user.delCoin(ch1.getcPrice());
+            user.delCoin(ch1.getPrice());
             userCoin.text = user.getCoin() + "";
             user.updateChar(1);
             Debug.Log(user.purchesesCharactor[1]);
@@ -78,7 +90,7 @@ public class ShopController : MonoBehaviour
         }
         else if (charIndex == 2)
         {
-            user.delCoin(ch2.getcPrice());
+            user.delCoin(ch2.getPrice());
             userCoin.text = user.getCoin() + "";
             user.updateChar(1);
             Debug.Log(user.purchesesCharactor[1]);
@@ -86,7 +98,7 @@ public class ShopController : MonoBehaviour
         }
         else if (charIndex == 3)
         {
-            user.delCoin(ch3.getcPrice());
+            user.delCoin(ch3.getPrice());
             userCoin.text = user.getCoin() + "";
             user.updateChar(1);
             Debug.Log(user.purchesesCharactor[1]);
@@ -94,7 +106,7 @@ public class ShopController : MonoBehaviour
         }
         else 
         {
-            user.delCoin(ch4.getcPrice());
+            user.delCoin(ch4.getPrice());
             userCoin.text = user.getCoin() + "";
             user.updateChar(1);
             Debug.Log(user.purchesesCharactor[1]);
@@ -103,8 +115,8 @@ public class ShopController : MonoBehaviour
     }
 
     void buyCharAction(string charname){
-        if (charname == ch1.getcName()){
-            if (user.getCoin() < ch1.getcPrice())
+        if (charname == ch1.getName()){
+            if (user.getCoin() < ch1.getPrice())
             {
                 disableBuy();
             }
@@ -115,8 +127,8 @@ public class ShopController : MonoBehaviour
                 //buyButton.gameObject.SetActive(false);
             }
         }
-        else if (charname == ch2.getcName()){
-            if (user.getCoin() < ch2.getcPrice())
+        else if (charname == ch2.getName()){
+            if (user.getCoin() < ch2.getPrice())
             {
                 disableBuy();
             }
@@ -126,8 +138,8 @@ public class ShopController : MonoBehaviour
                 buyChar(2);
             }
         }
-        else if (charname == ch3.getcName()){
-            if (user.getCoin() < ch3.getcPrice())
+        else if (charname == ch3.getName()){
+            if (user.getCoin() < ch3.getPrice())
             {
                 disableBuy();
             }
@@ -137,8 +149,8 @@ public class ShopController : MonoBehaviour
                 buyChar(3);
             }
         }
-        else if (charname == ch4.getcName()){
-            if (user.getCoin() < ch4.getcPrice())
+        else if (charname == ch4.getName()){
+            if (user.getCoin() < ch4.getPrice())
             {
                 disableBuy();
             }
@@ -162,17 +174,17 @@ public class ShopController : MonoBehaviour
     void updateName(string name){
         charName.GetComponent<Text>().text = name;
         ableBuy(); 
-        if (name == ch1.getcName())
+        if (name == ch1.getName())
         {
             showPicture(1);
             
         }
-        else if (name == ch2.getcName())
+        else if (name == ch2.getName())
         {
             showPicture(2);    
             // checkCharIsBuy(2);           
         }
-        else if (name == ch3.getcName())
+        else if (name == ch3.getName())
         {
             showPicture(3);
             // checkCharIsBuy(3);               
@@ -244,5 +256,24 @@ public class ShopController : MonoBehaviour
             char4pic.enabled = false;
         }
     }
+
+    public void getCharacter(){
+        for (int i = 0; i < 4; i++)
+        {
+            RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character/CH000" + (i+1) +".json").Then(response =>
+            {
+                
+                // Debug.Log(response.Text.ToString());
+                json[i] = response.Text.ToString();
+                Debug.Log(json[i]);
+                // JsonUtility.FromJsonOverwrite(json);
+                // Debug.Log(newChar);
+                // return newChar;
+            });
+        }
+        
+         
+    }
+    
 
 }

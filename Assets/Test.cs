@@ -11,6 +11,7 @@ using Firebase.Unity.Editor;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
+
 public class Test : MonoBehaviour
 {
     public Button submitButton;
@@ -18,15 +19,21 @@ public class Test : MonoBehaviour
     public InputField usernameInput; 
     private const string projectId = "testfirebase-b970e"; // You can find this in your Firebase project settings
     private static readonly string databaseURL = $"https://testfirebase-b970e.firebaseio.com/";
-
-
+    Character newChar = new Character();
+    Character user = new Character();
     // Start is called before the first frame update
     void Start()
     {
+        
+        Debug.Log(user.ToString());
+        Character ch1 = new Character();
         // User newUser = new User(usernameInput.Text);
         // submitActionCallback callback = new submitActionCallback(); 
-        submitButton.onClick.AddListener(() => submitAction(usernameInput.text, "112"));
-        getButton.onClick.AddListener(() => getUser(usernameInput.text));
+        // 
+        // submitButton.onClick.AddListener(() => submitAction(usernameInput.text, "112"));
+
+        getButton.onClick.AddListener(() => getDatafromDatabase());
+        Debug.Log("n");
     }
 
     // Update is called once per frame
@@ -43,15 +50,31 @@ public class Test : MonoBehaviour
             Debug.Log("Fuck You");
         });
     }
+    public void getDatafromDatabase(){
+        // Debug.Log("Call Functuin");
+        // string name = "CH0001";
+        
+        // Debug.Log("https://testfirebase-b970e.firebaseio.com/Character/" + name +".json");
+        // RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character" + name + ".json").Then(response =>
+        //     {
+        //         user=response;
+        //     });
+        // Debug.Log("End");
+        // Debug.Log(user.characterId);
+        // Debug.Log(user.characterName);
+        // Debug.Log(user.price);
 
-    public void getUser(string username){
-        // RestClient.Put<User>($"{databaseURL}users/{usernameInput.text}.json", user)
-        RestClient.Get($"{databaseURL}users/{username}.json").Then(response => {
-            // EditorUtility.DisplayDialog("Response", response.Text.ToString(), "Ok");
-            Debug.Log(response.Text);
+        RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character/CH0001.json").Then(response => {
             Debug.Log(response.Text.ToString());
-            // Debug.Log();
-        });
+            JsonUtility.FromJsonOverwrite(response.Text.ToString(), user);
+            Debug.Log(user);
+        });    
+    }
+
+    public void getUser(){
+        getDatafromDatabase();
+        
+
     }
 
 }

@@ -18,6 +18,9 @@ public class Character : MonoBehaviour
 
     }
 
+    public Character(string name){
+    }
+
     public Character(string id, string name, int rate) {
         characterId = id;
         characterName = name;
@@ -36,28 +39,35 @@ public class Character : MonoBehaviour
     }
 
     // Test Only อย่าแตะ
-    public string getCID(){
+    public string getID(){
         return characterId;
     }
 
-    public string getcName(){
+    public string getName(){
         return characterName;
     }
 
-    public int getcPrice(){
+    public int getPrice(){
         return price;
     }
 
-    public void setCharacter(String charID){
-        RestClient.Get<Character>("https://testfirebase-b970e.firebaseio.com/Character/" + charID +".json").Then(response =>
+    public string setCharacter(string charID){
+        string json = null;
+        RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character/" + charID +".json").Then(response =>
             {
-                characterId = response.characterId;
-                characterName = response.characterName;
-                price = response.price;
+                json = response.Text.ToString();
+                return json;
+                // JsonUtility.FromJsonOverwrite(json);
+                // Debug.Log(newChar);
                 // return newChar;
             });
-        
+        return null;
           
+    }
+
+    public override string ToString(){
+        string text = "CharacterID: " + characterId + " Name: " + characterName + " Price: " + price;
+        return text;
     }
 
 }
