@@ -70,4 +70,9 @@ public class Character : MonoBehaviour
         return text;
     }
 
+    public static Character firebaseResponse(String response) {
+        Character firebaseCharactor = new Character();
+        JsonUtility.FromJsonOverwrite(response, firebaseCharactor);
+        return firebaseCharactor;
+    }
 }
