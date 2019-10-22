@@ -10,7 +10,8 @@ using Firebase.Database;
 using Firebase.Unity.Editor;
 using UnityEditor;
 using UnityEngine.SceneManagement;
-
+using RSG;
+using System.Threading.Tasks;
 
 public class Test : MonoBehaviour
 {
@@ -22,17 +23,20 @@ public class Test : MonoBehaviour
     Character newChar = new Character();
     Character user = new Character();
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         
-        Debug.Log(user.ToString());
-        Character ch1 = new Character();
+        // Debug.Log(user.ToString());
+        Character ch1 = await getDatafromDatabase("CH0001");
+        Debug.Log("30: Display ch1 Data: " + ch1);
+        
+        // Character ch2 = new Character();
         // User newUser = new User(usernameInput.Text);
         // submitActionCallback callback = new submitActionCallback(); 
         // 
         // submitButton.onClick.AddListener(() => submitAction(usernameInput.text, "112"));
-
-        getButton.onClick.AddListener(() => getDatafromDatabase());
+        
+        // getButton.onClick.AddListener(() => getDatafromDatabase());
         Debug.Log("n");
     }
 
@@ -50,31 +54,22 @@ public class Test : MonoBehaviour
             Debug.Log("Fuck You");
         });
     }
-    public void getDatafromDatabase(){
-        // Debug.Log("Call Functuin");
-        // string name = "CH0001";
-        
-        // Debug.Log("https://testfirebase-b970e.firebaseio.com/Character/" + name +".json");
-        // RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character" + name + ".json").Then(response =>
-        //     {
-        //         user=response;
-        //     });
-        // Debug.Log("End");
-        // Debug.Log(user.characterId);
-        // Debug.Log(user.characterName);
-        // Debug.Log(user.price);
+    public async Task<Character> getDatafromDatabase(String id){
+        Character character = new Character();
 
-        RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character/CH0001.json").Then(response => {
-            Debug.Log(response.Text.ToString());
-            JsonUtility.FromJsonOverwrite(response.Text.ToString(), user);
-            Debug.Log(user);
-        });    
+        RestClient.Get("https://testfirebase-b970e.firebaseio.com/Character/" + id + ".json").Then(response => {
+            String responseString = response.Text.ToString();
+            Debug.Log("response: " + responseString);
+            character = Character.firebaseResponse(responseString);
+            Debug.Log("Character: " + character);
+        });
+        await new WaitUntil(() => character.getID() != null);
+        return character;
     }
 
     public void getUser(){
-        getDatafromDatabase();
+        // getDatafromDatabase();
         
-
     }
 
 }
