@@ -97,6 +97,7 @@ public class AuthGame : MonoBehaviour
                 }
                 
                 Debug.LogError("SignInWithEmailAndPasswordAsync error: " + task.Exception);
+                showPopup("Wrong Username or Password");
                 if (task.Exception.InnerExceptions.Count > 0)
                     showPopup("Wrong Username or Password");
                 return;
@@ -105,19 +106,13 @@ public class AuthGame : MonoBehaviour
                 FirebaseUser user = task.Result;
                 Debug.LogFormat("User signed in successfully: {0} \n" +
                     "User ID: ({1})", user.Email, user.UserId);
-            //DatabaseReference  dbRef = db.GetReference("User");
-            //String json = JsonUtility.ToJson(user);
-            //dbRef.SetRawJsonValueAsync(json);
-            //Debug.Log("user : " + user.Email);
-            //Debug.Log(String.Format("Fucking Signin Succed display name " + user.DisplayName));
-            //Debug.Log(String.Format("Fucking Signin Succed uid " + user.UserId ));
                 String loginEmail = user.Email;
                 String uid = user.UserId;
-                PlayerPrefs.SetString("LoginUser", user != null ? user.Email : "Unknown");
+                // PlayerPrefs.SetString("LoginUser", user != null ? user.Email : "Unknown");
                 User.usermail = loginEmail;
                 User.userID = uid;
-                
-                StartCoroutine(LoadNewScene());
+                SceneManager.LoadSceneAsync("Home");
+                // StartCoroutine(LoadNewScene());
             }
         });
     }
